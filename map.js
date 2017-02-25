@@ -1,23 +1,3 @@
-/*
-// get the new coordinates every 2 seconds (or whatever)
-// Can make it look like the car is moving: http://jsfiddle.net/HYuRR/2/
-// Need to tweak that obviously so it just updates the lat lng, we don't need
-// to update marker object
-// Use a time based animation approach here to see how many frames needed to animate
-// to the next coordinate
-setInterval(()=>{
-    let lat = parseFloat(this.state.coords.lat) + 0.1;
-    let lng = parseFloat(this.state.coords.lng) + 0.1;
-    console.log('updating lat and lng to: ',lat,lng);
-    this.setState({
-        coords: {
-            lat: lat,
-            lng: lng
-        }
-    });
-},2000);
-*/
-
 import React from 'react';
 import GoogleMap from 'google-map-react';
 import CarMarker from './marker';
@@ -29,7 +9,7 @@ const Map = React.createClass({
     getDefaultProps() {
         return {
             center: { lat: 40, lng: 40 },
-            zoom: 5,
+            zoom: 8,
             lat: 40.000,
             lng: 40.000,
             map: null,
@@ -59,6 +39,35 @@ const Map = React.createClass({
             lat: this.props.lat,
             lng: this.props.lng
         };
+    },
+
+    componentDidMount() {
+        // Sample data retrieval
+
+        setInterval(() => {
+            let lat = parseFloat(this.state.lat) + 0.1;
+            let lng = parseFloat(this.state.lng) + 0.1;
+            this.setState({
+                lat: lat,
+                lng: lng
+            });
+        }, 2000);
+    },
+
+    componentWillUpdate() {
+        if (!this.state.map) {
+            return;
+        }
+        if (!this.isMarkerInBounds()) {
+            this.setState((prevState) => {
+                return {
+                    center: {
+                        lat: prevState.lat,
+                        lng: prevState.lng
+                    }
+                };
+            });
+        }
     },
 
     createMapOptions(maps) {
