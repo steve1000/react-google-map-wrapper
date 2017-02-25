@@ -22,6 +22,7 @@ render() {
                 zoom={12}
                 lat={-33.8688}
                 lng={151.2093}
+                traffic={true}
             />
         </div>
     )
