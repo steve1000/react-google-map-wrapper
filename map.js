@@ -7,10 +7,10 @@ const Map = React.createClass({
 
     getDefaultProps() {
         return {
-            center: { lat: 40, lng: 40 },
-            zoom: 8,
-            lat: 40.000,
-            lng: 40.000
+            center: { lat: -33.8688, lng: 151.2093 },
+            zoom: 12,
+            lat: -33.8688,
+            lng: 151.2093
         };
     },
 
@@ -39,8 +39,8 @@ const Map = React.createClass({
         // Sample data retrieval
 
         setInterval(() => {
-            let lat = parseFloat(this.state.lat) + 0.1;
-            let lng = parseFloat(this.state.lng) + 0.1;
+            let lat = parseFloat(this.state.lat) - 0.00;
+            let lng = parseFloat(this.state.lng) - 0.01;
             this.setState({
                 lat: lat,
                 lng: lng
@@ -66,7 +66,7 @@ const Map = React.createClass({
 
     createMapOptions(maps) {
         return {
-            panControl: true,
+            panControl: false,
             mapTypeControl: false,
             scrollwheel: true,
             styles: mapThemes[this.props.theme] || []
@@ -96,7 +96,8 @@ const Map = React.createClass({
                 defaultCenter={this.props.center}
                 center={this.state.center}
                 defaultZoom={this.props.zoom}
-                options={this.createMapOptions}>
+                options={this.createMapOptions}
+                layerTypes={['TrafficLayer']}>
                 <Marker
                     lat={this.state.lat}
                     lng={this.state.lng}
