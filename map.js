@@ -10,7 +10,8 @@ const Map = React.createClass({
             center: { lat: -33.8688, lng: 151.2093 },
             zoom: 12,
             lat: -33.8688,
-            lng: 151.2093
+            lng: 151.2093,
+            traffic: false
         };
     },
 
@@ -88,6 +89,14 @@ const Map = React.createClass({
         });
     },
 
+    getLayerTypes() {
+        let layerTypes = [];
+        if(this.props.traffic) {
+            layerTypes.push('TrafficLayer');
+        }
+        return layerTypes;
+    },
+
     render() {
         return (
             <GoogleMap
@@ -97,7 +106,7 @@ const Map = React.createClass({
                 center={this.state.center}
                 defaultZoom={this.props.zoom}
                 options={this.createMapOptions}
-                layerTypes={['TrafficLayer']}>
+                layerTypes={this.getLayerTypes()}>
                 <Marker
                     lat={this.state.lat}
                     lng={this.state.lng}
