@@ -1,7 +1,6 @@
 import React from 'react';
 import GoogleMap from 'google-map-react';
-import CarMarker from './marker';
-
+import Marker from './marker';
 import * as mapThemes from './mapColourThemes';
 
 const Map = React.createClass({
@@ -11,16 +10,11 @@ const Map = React.createClass({
             center: { lat: 40, lng: 40 },
             zoom: 8,
             lat: 40.000,
-            lng: 40.000,
-            map: null,
-            maps: null
+            lng: 40.000
         };
     },
 
     componentWillReceiveProps(nextProps) {
-        if (typeof nextProps === 'undefined') {
-            return;
-        }
         this.setState({
             center: {
                 lat: nextProps.center.lat,
@@ -88,7 +82,10 @@ const Map = React.createClass({
     },
 
     googleMapsApiLoaded({map, maps}) {
-        this.setState({ map, maps });
+        this.setState({
+            map,
+            maps
+        });
     },
 
     render() {
@@ -100,7 +97,10 @@ const Map = React.createClass({
                 center={this.state.center}
                 defaultZoom={this.props.zoom}
                 options={this.createMapOptions}>
-                <CarMarker lat={this.state.lat} lng={this.state.lng} />
+                <Marker
+                    lat={this.state.lat}
+                    lng={this.state.lng}
+                />
             </GoogleMap>
         );
     }
