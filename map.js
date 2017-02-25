@@ -31,7 +31,9 @@ const Map = React.createClass({
             center: { lat: 40, lng: 40 },
             zoom: 5,
             lat: 40.000,
-            lng: 40.000
+            lng: 40.000,
+            map: null,
+            maps: null
         };
     },
 
@@ -68,10 +70,25 @@ const Map = React.createClass({
         };
     },
 
+    isMarkerInBounds() {
+        let markerPosition = new this.state.maps.LatLng({
+            lat: this.state.lat,
+            lng: this.state.lng
+        });
+        return this.state.map.getBounds().contains(markerPosition);
+    },
+
+    googleMapsApiLoaded({map, maps}) {
+        this.setState({ map, maps });
+    },
+
     render() {
         return (
             <GoogleMap
+                onGoogleApiLoaded={this.googleMapsApiLoaded}
+                yesIWantToUseGoogleMapApiInternals={true}
                 defaultCenter={this.props.center}
+                center={this.state.center}
                 defaultZoom={this.props.zoom}
                 options={this.createMapOptions}>
                 <CarMarker lat={this.state.lat} lng={this.state.lng} />
