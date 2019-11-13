@@ -1,3 +1,10 @@
+# UPDATE 2019/20
+
+Note to self
+
+Don't use this anymore. There are plenty of things that you shouldn't do in modern React. I'll keep it here for reference only.
+
+
 # React.js Google Map Wrapper
 
 ## Usage
